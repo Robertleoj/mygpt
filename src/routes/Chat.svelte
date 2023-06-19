@@ -38,13 +38,13 @@
 </script>
 
 
-<div class="relative h-full">
-    <div class="relative h-full overflow-scroll px-6" bind:this={scrollableDiv}>
+<div class="relative h-full flex flex-col">
+    <div class="relative h-full overflow-y-scroll px-6 pb-3 flex-grow" bind:this={scrollableDiv}>
         {#each messages as msg, i}
             <UserChatMessage message={msg}/>
         {/each}
     </div>
-    <div class="absolute bg-white bottom-6 w-3/5 inset-x-0 mx-auto flex items-center border-black border-2">
+    <div class="bg-white bottom-6 w-3/5 inset-x-0 mx-auto mt-2 flex items-center border-black border-2">
         <MessageInput on:messageSent={handleSendMessage}/>
     </div>
     

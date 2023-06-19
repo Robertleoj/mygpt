@@ -4,6 +4,9 @@ import {
     SystemChatMessage,  
     AIChatMessage
 } from "langchain/schema";
+import { OPENAI_API_KEY } from "$env/static/private";
+
+
 
 function fixMessages(messages) {
     return messages.map(message => messageObjToSchema(message));
@@ -31,7 +34,10 @@ messages is an array with messages of the format
 }
 */
 export async function getResponse(messages) {
-    chat = new ChatOpenAI();
+    chat = new ChatOpenAI({
+        temperature: 0,
+        openAIApiKey: OPENAI_API_KEY
+    });
     const fixedMessages = fixMessages(messages);
     const response = await chat.call(fixedMessages);
 

@@ -1,5 +1,5 @@
 
-<script>    
+<script> 
     import { onMount } from 'svelte';
 	import { currentChat } from '$lib/stores/currentChat.js';
     import MessageInput from "./MessageInput.svelte";
@@ -8,11 +8,12 @@
 	let messages = [];
 
     let scrollableDiv;
+    
     onMount(() => {
         scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
     });
 
-    const handleSendMessage = (event) => {
+    const handleSendMessage = async (event) => {
 
         const message = event.detail;
         
@@ -22,9 +23,12 @@
 
         console.log(message);
 
-		messages = [...messages, message];
+		messages = [...messages, {
+            role: 'user',
+            content: message
+        }];
         
-        if($currentChat === null){
+        if ($currentChat === null){
             currentChat.set('new chat id'); // Update this as per your requirements
         }
 
@@ -32,7 +36,21 @@
         setTimeout(() => {
             scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
         }, 0);
-        
+
+        /** Post message to server */
+
+        const response = await fetch('/api/brain/response', {
+            method: 'POST',
+			body: JSON.stringify({
+                messages
+            })
+		})
+
+        const aiMessage = await response.json();
+
+
+        messages = [...messages, aiMessage];
+
     }
 
 </script>
@@ -41,7 +59,7 @@
 <div class="relative h-full flex flex-col">
     <div class="relative h-full overflow-y-scroll px-6 pb-3 flex-grow" bind:this={scrollableDiv}>
         {#each messages as msg, i}
-            <UserChatMessage message={msg}/>
+            <UserChatMessage message={msg.content}/>
         {/each}
     </div>
     <div class="bg-white bottom-6 w-3/5 inset-x-0 mx-auto mt-2 flex items-center border-black border-2">

@@ -14,7 +14,7 @@ function fixMessages(messages) {
 
 function messageObjToSchema(message) {
     switch (message.role) {
-        case "human":
+        case "user":
             return new HumanChatMessage(message.content);
         case "system":
             return new SystemChatMessage(message.content);
@@ -34,7 +34,7 @@ messages is an array with messages of the format
 }
 */
 export async function getResponse(messages) {
-    chat = new ChatOpenAI({
+    const chat = new ChatOpenAI({
         temperature: 0,
         openAIApiKey: OPENAI_API_KEY
     });

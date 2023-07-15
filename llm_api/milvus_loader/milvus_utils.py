@@ -35,7 +35,7 @@ def make_collection(name: str):
          FieldSchema(name="text", dtype=DataType.VARCHAR, max_length=5000),
          FieldSchema(name="vector", dtype=DataType.FLOAT_VECTOR, dim=openai_emb_dim)
      ]
-     schema = CollectionSchema(fields, "Stores Aha documents")
+     schema = CollectionSchema(fields, "Stores documents")
      documents = Collection(name=name, schema=schema)
 
      index_params = {

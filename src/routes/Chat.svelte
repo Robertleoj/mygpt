@@ -20,8 +20,6 @@
             return;
         }
 
-        console.log(message);
-
 		messages = [...messages, message];
         
         if($currentChat === null){

@@ -1,13 +1,19 @@
 <script>
-    import SideBarFileItem from "./SideBarFileItem.svelte";
-    import SideBarGroupItem from "./SideBarGroupItem.svelte";
     import AddButton from "./AddButton.svelte";
-</script>
+    import SideBarFileItem from "./SideBarFileItem.svelte";
 
-<div class="flex flex-col">
-    <AddButton/>
-    <h1 class="pt-5 text-black">Files</h1>
-    <div>
-        <SideBarFileItem />
-    </div>
-</div>
+    let mFiles = []; // type: File
+  
+    function handleFileChange(event) {
+      const newFiles = Array.from(event.detail);
+      mFiles = [...mFiles, ...newFiles];
+    }
+  </script>
+  
+  <!--Button for the user to upload files-->
+  <AddButton on:filesSelected={handleFileChange}/>
+  
+  {#each mFiles as file}
+    <SideBarFileItem fileName={file.name}/>
+  {/each}
+  

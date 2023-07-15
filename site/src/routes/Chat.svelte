@@ -46,7 +46,10 @@
             })
 		})
 
-        const aiMessage = await response.json();
+        let aiMessage = await response.json();
+        aiMessage = aiMessage.response;
+        console.log("ai Message");
+        console.log(aiMessage);
 
 
         messages = [...messages, aiMessage];

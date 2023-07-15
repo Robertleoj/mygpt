@@ -25,6 +25,3 @@
   <PlusIcon class="mr-1" />
   Add files
 </button>
-
-
-  
